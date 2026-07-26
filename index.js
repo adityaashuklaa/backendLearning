@@ -7,6 +7,14 @@ app.get('/', (req, res) => {
     res.send("Hello World!!")
 })
 
+app.get('/twiter', (req, res) => {
+    res.send('https://x.com/adityaashuklaa')
+})
+
+app.get('/login', (req, res) => {
+    res.send('<h1>Please login at my server !!! </h1>')
+})
+
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`);
 })

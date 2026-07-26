@@ -11,5 +11,8 @@
     "backend"
   ],
   "author": "aditya shukla",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.2.1"
+  }
 }

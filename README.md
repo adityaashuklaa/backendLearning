@@ -1,2 +1,2 @@
 ## Starting with Backend
-- Initializing empty node.js project.
+- Initializing empty node.js project, using "npm init" command.

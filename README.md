@@ -13,3 +13,6 @@
 - Writing the complete url everytime is a tedious job to do, and in production you have to change it again and again, therefore proxys are made, so that api response stay standardise.
 - You can write proxy in the package.json file if the application is made using CRA, we're using vite bundler, so here the proxys are written inside the vite.config.js file in object format.
 - In production we just have to change the value of the "/api" key.
+
+## Moon Modeler
+- Moon modeler is a data modelling tool for MongoDB and noSQL, it is used to define the structure of the data.

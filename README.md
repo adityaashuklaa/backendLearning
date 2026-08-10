@@ -19,3 +19,6 @@
 
 ## Codesanbox, Github Codespaces, stackblitz, repelit
 - All these platforms provides the services to right code in cloud storage environment, you need nothing to be installed on your local device.
+
+## Multer and Express file upload
+- Both of these are the packages used for file uploading.

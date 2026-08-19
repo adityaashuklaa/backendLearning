@@ -1,0 +1,1 @@
+export const DB_NAME = "videotube" // this is not system specific variable it is just a database name that's why written inside the constants not the .env.

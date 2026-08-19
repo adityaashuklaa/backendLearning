@@ -20,5 +20,16 @@
 ## Codesanbox, Github Codespaces, stackblitz, repelit
 - All these platforms provides the services to right code in cloud storage environment, you need nothing to be installed on your local device.
 
+## Git Ignore
+- gitignore.io is used to create git ignore files.
+
 ## Multer and Express file upload
 - Both of these are the packages used for file uploading.
+
+## Product Grade Folder Structure
+- controllers => contains all the functionalities.
+- db => how to connect Database logic.
+- middlewares => code which has to run in between of request and response.
+- models => Schema for the database
+- routes => contains the logic for the routes
+- utils => shorcut for utilities, basically holding reusable code, like file uploading and mailer.

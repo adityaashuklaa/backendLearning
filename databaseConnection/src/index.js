@@ -1,6 +1,6 @@
 //require('dotenv').config({path: './env'}) // The code will for sure work, but has inconsistency as other file are being imported using import method and here require syntax is being used.
 import dotenv from 'dotenv' // import syntax is not available as if now, but we can use it using experimental features.
-import connectDB from "./db";
+import connectDB from "./db/index.js";
 
 dotenv.config({
     path: "./env"

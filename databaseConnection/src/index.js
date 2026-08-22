@@ -7,8 +7,17 @@ dotenv.config({
 })
 
 connectDB()
+.then(() => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log(`Server is running at port : ${process.env.PORT}`);
+    })
+})
+.catch((err) => {
+    console.log("MONGODB Connection failed!!", err);  
+})
 
 
+// ConnectDB is an asyncorous method, and whenever it completes it returns a promise, which can be handles using .then, .catch
 
 // IIFE Approach to connect to DB.
 /*

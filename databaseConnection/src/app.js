@@ -11,7 +11,7 @@ app.use(cors({
 
 app.use(express.json({ limit: "16kb" }))
 app.use(express.urlencoded({extended: true, limit: "16kb"})) // Data is coming from URL.
-app.use(express.static("public"))
+app.use(express.static("public")) // Used to store public assets, like images, videos, pdfs etc.
 app.use(cookieParser()) // Cookie parser helps the server to communicate with user's browser to get the access of cookies and set cookies, basically performing CRUD Operations. Somewhere secured cookies are being stored at browser level, which only the server can read and access.
 
 export default app

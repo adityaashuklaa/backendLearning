@@ -8,6 +8,10 @@ dotenv.config({
 
 connectDB()
 .then(() => {
+    app.on("error", (error) => {
+        console.log("ERROR", error);
+        throw error
+    })
     app.listen(process.env.PORT || 8000, () => {
         console.log(`Server is running at port : ${process.env.PORT}`);
     })
@@ -41,4 +45,6 @@ const app = express()
         throw error
     }
 })()
+
+// Whenever data is coming from URL, and express has to handle it, it is being handled using req.params.
     */

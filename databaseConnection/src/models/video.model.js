@@ -39,7 +39,7 @@ const videoSchema = new mongoose.Schema(
     }, {timestamps: true}
 )
 
-videoSchema.plugin(mongooseAggregatePaginate) // It is used to write queries
+videoSchema.plugin(mongooseAggregatePaginate) // It is used to write aggregation queries
 
 export const Video = mongoose.model("Video", videoSchema)
 

@@ -25,6 +25,9 @@
 
 ## Multer and Express file upload
 - Both of these are the packages used for file uploading, but MULTER is popular.
+- File is never directly uploaded to cloudinary, it is being uploaded through multer. Cloudinary is a service basically, like AWS SDK.
+- Firstly we will be taking the file from the user using multer and will save it temporarily to our server.
+- Then using cloudinary, we will be taking that file from the local server and will upload to cloudinary server.
 
 ## Product Grade Folder Structure
 - controllers => contains all the functionalities.

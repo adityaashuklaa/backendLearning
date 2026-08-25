@@ -14,6 +14,15 @@ app.use(express.urlencoded({extended: true, limit: "16kb"})) // Data is coming f
 app.use(express.static("public")) // Used to store public assets, like images, videos, pdfs etc.
 app.use(cookieParser()) // Cookie parser helps the server to communicate with user's browser to get the access of cookies and set cookies, basically performing CRUD Operations. Somewhere secured cookies are being stored at browser level, which only the server can read and access.
 
+// routes import
+
+import userRouter from "./routes/user.routes.js"
+
+// routes declaration
+app.use("/api/v1/users", userRouter)
+
+// http://localhost:8000/api/v1/users/register 
+
 export default app
 
 // app.use is used for middlewares and configuration.

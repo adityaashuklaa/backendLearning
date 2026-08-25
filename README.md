@@ -36,3 +36,7 @@
 - models => Schema for the database
 - routes => contains the logic for the routes
 - utils => shorcut for utilities, basically holding reusable code, like file uploading and mailer.
+
+## HTTP(Hyper Text Transfer Protocol)
+- HTTP and HTTPS, the difference between these two is of Protocol.
+- In http method the data is transfered in a clear text, suppose you're sending abc so the server will receive abc, but in https there is a secuirty layer to it which encrypts the data before sending.

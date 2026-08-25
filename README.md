@@ -24,7 +24,7 @@
 - gitignore.io is used to create git ignore files.
 
 ## Multer and Express file upload
-- Both of these are the packages used for file uploading.
+- Both of these are the packages used for file uploading, but MULTER is popular.
 
 ## Product Grade Folder Structure
 - controllers => contains all the functionalities.

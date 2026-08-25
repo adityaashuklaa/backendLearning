@@ -55,6 +55,7 @@ userSchema.pre("save", async function(next){
     next()
 })
 
+// This is cryptographical algorithm, it takes time to compute and compare password therefore, async await is being used.
 userSchema.methods.isPasswordCorrect = async function (password) {
     return await bcrypt.compare(password, this.password)
 }
@@ -63,7 +64,7 @@ userSchema.methods.generateAccessToken = function(){
     return jwt.sign(
         {
             _id: this._id,
-            email: this.email,
+            email: this.email,  
             username: this.username,
             fullName: this.fullname,
         },

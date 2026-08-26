@@ -12,7 +12,6 @@ export default asyncHandler
 // const asyncHandler = (func) => async () => {}
 
 // Try & Catch syntax
-
 // const asyncHandler = (fn) => async (req, res, next) => {
 //     try {
 //         await fn(req, res, next)

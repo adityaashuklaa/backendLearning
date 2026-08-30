@@ -1,4 +1,5 @@
 import asyncHandler from "../utils/asyncHandler"
+import {ApiError} from "../utils/ApiError"
 
 const registerUser = asyncHandler( async (req, res) => {
     // get user details from frontend (No need to write frontend, we can simulate it using postman.)
@@ -13,6 +14,10 @@ const registerUser = asyncHandler( async (req, res) => {
 
     const {fullname, email, username, password} = req.body
     console.log("email: ", email);
+
+    if(fullname === "") {
+        throw new ApiError(400, "fullname is required")
+    }
     
 })
 

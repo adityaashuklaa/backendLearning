@@ -40,3 +40,6 @@
 ## HTTP(Hyper Text Transfer Protocol)
 - HTTP and HTTPS, the difference between these two is of Protocol.
 - In http method the data is transfered in a clear text, suppose you're sending abc so the server will receive abc, but in https there is a secuirty layer to it which encrypts the data before sending.
+
+## Postman Collection
+- Postman collection is a set of data which is being shared to the frontend.

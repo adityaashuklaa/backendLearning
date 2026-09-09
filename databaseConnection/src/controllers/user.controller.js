@@ -2,7 +2,7 @@ import asyncHandler from "../utils/asyncHandler"
 import {ApiError} from "../utils/ApiError"
 import {User} from "../models/user.model.js"
 import uploadOnCloudinary from "../utils/cloudinary.js"
-import { upload } from "../middlewares/multer.middleware"
+import ApiResponse from "../utils/ApiResponse.js"
 
 const registerUser = asyncHandler( async (req, res) => {
     // get user details from frontend (No need to write frontend, we can simulate it using postman.)
@@ -43,7 +43,7 @@ const registerUser = asyncHandler( async (req, res) => {
         throw new ApiError(400, "Avatar file is required.")
     }
 
-    User.create({
+    const user = User.create({
         fullname,
         avatar: avatar.url,
         coverImage: coverImage?.url || "",
@@ -51,6 +51,19 @@ const registerUser = asyncHandler( async (req, res) => {
         password,
         usernmae: username.tolowerCase()
     })
+
+    const createdUser = await User.findById(user._id).select(
+        "-password -refreshToken"
+    )
+
+    if(!createdUser) {
+        throw new ApiError(500, "Something went wrong while registering the user!!")
+    }
+
+    return res.status(202).json(
+        new ApiResponse(200, createdUser, "User registered Successfully!!")
+    )
+
 })
 
 export default registerUser

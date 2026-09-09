@@ -7,6 +7,8 @@ class ApiResponse {
     }
 }
 
+export default ApiResponse
+
 // HTTP Response Status Codes
 /* 
     Informational responses (100-199)

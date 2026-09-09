@@ -18,3 +18,5 @@ router.route("/register").post(
     registerUser)
 
 export default router  
+
+// Uploads can accept multiple fields in the array format.

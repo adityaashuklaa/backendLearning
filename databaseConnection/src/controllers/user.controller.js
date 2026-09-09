@@ -1,5 +1,8 @@
 import asyncHandler from "../utils/asyncHandler"
 import {ApiError} from "../utils/ApiError"
+import {User} from "../models/user.model.js"
+import uploadOnCloudinary from "../utils/cloudinary.js"
+import { upload } from "../middlewares/multer.middleware"
 
 const registerUser = asyncHandler( async (req, res) => {
     // get user details from frontend (No need to write frontend, we can simulate it using postman.)
@@ -20,7 +23,20 @@ const registerUser = asyncHandler( async (req, res) => {
     ) {
         throw new ApiError(400, "All fields are required.")
     }
-    
+
+    const existedUser = User.findOne({
+        $or: [{ username }, { email }]
+    })
+    if(existedUser) {
+        throw new ApiError(409, "User with username or email already exists.")
+    }
+
+    const avatarLocalPath = req.files?.avatar[0]?.path
+    const coverImageLocalPath = req.files?.coverImage[0]?.path;
+    if(!avatarLocalPath) throw new ApiError(400, "Avatar file is required.")
+    await uploadOnCloudinary(avatarLocalPath)
 })
 
 export default registerUser
+
+// Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.

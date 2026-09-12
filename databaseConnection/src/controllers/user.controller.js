@@ -69,3 +69,4 @@ const registerUser = asyncHandler( async (req, res) => {
 export default registerUser
 
 // Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.
+// mongoose generates bson data, and here in registerUserData, the id is bson_id.

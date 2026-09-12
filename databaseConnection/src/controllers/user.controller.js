@@ -116,6 +116,24 @@ const loginUser = asyncHandler( async (req, res) => {
         throw new ApiError(401,  "Invalid User Credentials")
     }
 
+    const {accessToken, refreshToken} = await generateAccessAndRefreshTokens(user._id)
+
+    const loggedInUser = await User.findById(user._id).select("-password -refreshToken")
+
+    const options = {
+        httpOnly: true, // Cookies are modifyable by default at the frontend level, but when these two are true then cookies can only be modified at the server level.
+        secure: true
+    }
+
+    return res
+    .status(200)
+    .cookie("accessToken", accessToken, options)
+    .cookie("refreshToken", refreshToken, options)
+    .json(
+        new ApiResponse(200, {
+            user: loggedInUser, accessToken, refreshToken
+        }, "User logged in Successfully.")
+    )
 
 })
 

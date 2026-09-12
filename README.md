@@ -45,4 +45,7 @@
 - Postman collection is a set of data which is being shared to the frontend.
 
 ## Refresh Token & Access Token
--
+- The difference between them is of expiration date.
+- Access tokens are generally short lived and refresh tokens are long lived.
+- Access tokens works on the concept of giving access to a person/user for features till he's authenticated(login), and suppose if you have been idle for about 10 mins, then a user is logged out from the application and looses the capabilities of features, then he has to login back that is basically refresh token.
+- Refresh token is being saved in DB and also being given to the client.

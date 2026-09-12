@@ -4,6 +4,24 @@ import {User} from "../models/user.model.js"
 import uploadOnCloudinary from "../utils/cloudinary.js"
 import ApiResponse from "../utils/ApiResponse.js"
 
+const generateAccessAndRefreshTokens = async(userId) => {
+    {
+        try {
+            const user = await User.findById(userId)
+            const accessToken = user.generateAccessToken()
+            const refreshToken = user.generateRefreshToken() 
+
+            user.refreshToken = refreshToken
+            await user.save({validateBeforeSave: false}) // We know what we are doing that's why no requirement of validation
+
+            return {accessToken, refreshToken}
+
+        } catch (error) {
+            throw new ApiError(500, "Something went wrong while generating refresh and access tokens.")
+        }
+    }
+}
+
 const registerUser = asyncHandler( async (req, res) => {
     // get user details from frontend (No need to write frontend, we can simulate it using postman.)
     // validation of user details - not empty
@@ -71,7 +89,37 @@ const registerUser = asyncHandler( async (req, res) => {
 
 })
 
-export default registerUser
+const loginUser = asyncHandler( async (req, res) => {
+    // req body => data
+    // username or email
+    // find the user
+    // password check
+    // access and refresh token
+    // send cookie (secure cookie)
+
+    const {email, username, password} = req.body
+    if(!username || !email) {
+        throw new ApiError(400, "username or email is required.")
+    }
+
+    const user = await User.findOne({
+        $or: [{username}, {email}]
+    })
+
+    if(!user) {
+        throw new ApiError(404,  "User does not exist")
+    }
+    
+    const isPasswordValid = await user.isPasswordCorrect(password)
+    
+    if(!isPasswordValid) {
+        throw new ApiError(401,  "Invalid User Credentials")
+    }
+
+
+})
+
+export default { registerUser, loginUser }
 
 // Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.
 // mongoose generates bson data, and here in registerUserData, the id is bson_id.

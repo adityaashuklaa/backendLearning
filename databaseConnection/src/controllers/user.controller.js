@@ -137,6 +137,10 @@ const loginUser = asyncHandler( async (req, res) => {
 
 })
 
+const logoutUser = asyncHandler( async (req, res) => {
+    
+})
+
 export default { registerUser, loginUser }
 
 // Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.

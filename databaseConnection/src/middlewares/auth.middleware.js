@@ -4,7 +4,7 @@ import ApiError from "../utils/ApiError";
 import asyncHandler from "../utils/asyncHandler";
 import jwt from "jsonwebtoken";
 
-export const verifyJWT = asyncHandler(async(req, res, next) => {
+export const verifyJWT = asyncHandler(async(req, _, next) => {
     try {
         const token = req.cookies?.accessToken || req.header("Authorization")?.replace("Bearer ", "")
         if(!token) {
@@ -26,3 +26,5 @@ export const verifyJWT = asyncHandler(async(req, res, next) => {
     }
 
 })
+
+// if the res paramenter is not being used, we can use _ in replace of it.

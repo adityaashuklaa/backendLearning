@@ -211,6 +211,22 @@ const refreshAccessToken = asyncHandler( async (req, res) => {
     }
 })
 
+const changeCurrentPassword = asyncHandler(async(req, res) => {
+    const {oldPassword, newPassword} = req.body
+
+    const user = await User.findById(req.user?.id)
+    const isPasswordCorrect = user.isPasswordCorrect(oldPassword)
+
+    if(!isPasswordCorrect) {
+        throw new ApiError(400, "Invalid Old Password")
+    }
+
+    user.password = newPassword
+    await user.save({validateBeforeSave: false})
+
+    return res.status(200).json(new ApiResponse(200, {}, "Password changed successfully."))
+})
+
 export default { registerUser, loginUser, logoutUser, refreshAccessToken }
 
 // Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.

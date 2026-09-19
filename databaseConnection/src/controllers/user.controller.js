@@ -4,6 +4,7 @@ import {User} from "../models/user.model.js"
 import uploadOnCloudinary from "../utils/cloudinary.js"
 import ApiResponse from "../utils/ApiResponse.js"
 import jwt from "jsonwebtoken"
+import mongoose from "mongoose"
 
 const generateAccessAndRefreshTokens = async(userId) => {
     {
@@ -381,8 +382,65 @@ const getUserChannelProfile = asyncHandler(async(req, res) => {
     )
 })
 
-export default { registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage, getUserChannelProfile }
+const getWatchHistory = asyncHandler(async(req, res) => {
+    const user = await User.aggregate([
+        {
+            $match: {
+                _id: new mongoose.Types.ObjectId(req.user._id)
+            }
+        }, 
+        {
+            $lookup: {
+                from: "videos",
+                localField: "watchHistory",
+                foreignField: "_id",
+                as: "watchHistory",
+                pipeline: [
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "owner",
+                            foreignField: "_id",
+                            as: "owner",
+                            pipeline: [
+                                {
+                                    $project: {
+                                        fullname: 1,
+                                        username: 1,
+                                        avatar: 1
+                                    }
+                                }
+                            ]
+                        }
+                    },
+                    {
+                        $addFields: {
+                            owner: {
+                                $first: "$owner"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    ])
+
+    return res
+    .status(200)
+    .json(
+        new ApiResponse(
+            200,
+            user[0].watchHistory,
+            "Watch History fetched successfully."
+        )
+    )
+})
+
+
+
+export default { registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage, getUserChannelProfile, getWatchHistory }
 
 // Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.
 // mongoose generates bson data, and here in registerUserData, the id is bson_id.
 // It's a pro tip, whenever you're updating a file make sure it is in different controller, and hitting different end point, specifically for that. Cause if the whole user is being saved again and again then you're uneccessarily sending text data everytime.
+// _id returns the value in string format(ObjectID'62328328gdgsgsffdy7'), and the actual id is inside the ObjectID, which is retrieved by itself using mongoose, mongoose internally behind the scenes convert it into mongoDB ID.

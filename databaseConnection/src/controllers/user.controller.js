@@ -310,7 +310,31 @@ const updateUserCoverImage = asyncHandler(async(req, res) => {
     )
 })
 
-export default { registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage }
+const getUserChannelProfile = asyncHandler(async(req, res) => {
+    const { username } = req.params
+
+    if(!username?.trim()) {
+        throw new ApiError(400, "Username is missing.")
+    }
+
+    const channel = await User.aggregate([
+        {
+            $match: {
+                username: username?.tolowerCase()
+            }
+        },
+        {
+            $lookup: {
+                from: "subscriptions",
+                localField: "_id",
+                foreignField: "channel",
+                as: "subscribers"
+            }
+        }
+    ])
+})
+
+export default { registerUser, loginUser, logoutUser, refreshAccessToken, changeCurrentPassword, getCurrentUser, updateAccountDetails, updateUserAvatar, updateUserCoverImage, getUserChannelProfile }
 
 // Because the cloudinary is an expensive function and it has to awaited we have used async in the parameter of the function.
 // mongoose generates bson data, and here in registerUserData, the id is bson_id.
